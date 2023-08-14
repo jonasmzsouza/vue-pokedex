@@ -1,7 +1,29 @@
 <template>
   <div class="container">
     <div class="row mt-2">
-      <div class="col mb-2">stage</div>
+      <!-- start left side -->
+      <div class="col mb-2">
+        <div class="card stage">
+          <div class="card-header"></div>
+
+          <div class="card-body bg-pokeball bg-normal">
+            <div class="pokemon">
+              <img src="@/assets/images/pokemons/001.png" />
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <nav class="nav nav-pills nav-fill">
+              <!-- navigation menu -->
+            </nav>
+
+            <div class="details">
+              <!-- displays data according to navigation menu -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end left side -->
 
       <!-- start right side -->
       <div class="col mb-2 pokedex">
@@ -118,19 +140,43 @@ body {
   background-color: #2d8f78;
 }
 
-.bg-fogo {
+.bg-fire {
   background-color: #e47373;
 }
 
-.bg-agua {
+.bg-water {
   background-color: #5a9ed2;
 }
 
-.bg-inseto {
+.bg-insect {
   background-color: #26d3ab;
 }
 
 .bg-normal {
   background-color: #cecece;
+}
+
+.bg-pokeball {
+  background-image: url("~@/assets/images/pokeball.png");
+  background-repeat: no-repeat;
+  background-position: bottom right;
+}
+
+.stage {
+  color: #fff;
+  background-color: #333;
+  -webkit-box-shadow: 2px 2px 10px rgba(230, 223, 223, 0.77);
+  -moz-box-shadow: 2px 2px 10px rgba(230, 223, 223, 0.77);
+  box-shadow: 2px 2px 10px rgba(230, 223, 223, 0.77);
+  border-radius: 10px;
+}
+
+.pokemon {
+  display: block;
+  text-align: center;
+}
+
+.details {
+  margin: 20px 30px 20px 30px;
 }
 </style>
