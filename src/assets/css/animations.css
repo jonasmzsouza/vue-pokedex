@@ -1,0 +1,161 @@
+/* fade */
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1s;
+}
+
+.fade-enter-to,
+.fade-leave-from {
+  opacity: 1;
+}
+
+/* slide */
+.slide-enter-from {
+  opacity: 0;
+  transform: translateX(-150px);
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 1s;
+}
+
+.slide-enter-to,
+.slide-leave-from {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.slide-leave-to {
+  opacity: 0;
+  transform: translateX(150px);
+}
+
+/* zoom */
+.zoom-enter-from,
+.zoom-leave-to {
+  transform: scale(0);
+}
+
+.zoom-enter-active,
+.zoom-leave-active {
+  transition: transform 1s;
+}
+
+.zoom-enter-to,
+.zoom-leave-from {
+  transform: scale(1);
+}
+
+/* flip */
+.flip-enter-active {
+  animation: flip 1s;
+}
+
+.flip-leave-active {
+  animation: flip 1s reverse;
+}
+
+@keyframes flip {
+  from {
+    transform: rotateY(-80deg);
+  }
+
+  to {
+    transform: rotateY(0deg);
+  }
+}
+
+/* spooky */
+.spooky-enter-active {
+  animation: spooky 6s ease-in-out 0s infinite normal none;
+}
+
+.spooky-leave-active {
+  animation: spooky 6s ease-in-out 0s infinite reverse none;
+}
+
+@keyframes spooky {
+  0% {}
+
+  2% {
+    transform: skew(-6deg, -6deg) rotate(6deg);
+  }
+
+  28% {
+    transform: translate(50px, 0) skew(-6deg, -6deg) rotate(6deg);
+  }
+
+  29% {
+    transform: rotate(-6deg) skew(6deg, 6deg) translate(30px, 0);
+  }
+
+  70% {
+    transform: translate(-40px, 0) rotate(-6deg) skew(6deg, 6deg);
+  }
+
+  71% {
+    transform: rotate(6deg) skew(-6deg, -6deg) translate(-20px, 0);
+  }
+
+  96% {
+    transform: skew(-6deg, -6deg) rotate(6deg) translate(0, 0);
+  }
+
+  100% {}
+}
+
+/* jump */
+.jump-enter-to,
+.jump-leave-from {
+  opacity: 1;
+}
+
+.jump-enter-from,
+.jump-leave-to {
+  opacity: 0;
+}
+
+.jump-enter-active,
+.jump-leave-active {
+  transition: opacity 1s;
+}
+
+.jump-enter-active {
+  animation: jump 2s;
+}
+
+@keyframes jump {
+  0% {
+    transform: scale(1.1) translateY(0);
+  }
+
+  10% {
+    transform: scale(1.1, .9) translateY(0);
+  }
+
+  30% {
+    transform: scale(.9, 1.1) translateY(-30px);
+  }
+
+  50% {
+    transform: scale(1.05, .95) translateY(0);
+  }
+
+  57% {
+    transform: scale(1.1) translateY(-8px);
+  }
+
+  64% {
+    transform: scale(1.1) translateY(0);
+  }
+
+  0% {
+    transform: scale(1.1) translateY(0);
+  }
+}

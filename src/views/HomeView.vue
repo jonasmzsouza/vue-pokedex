@@ -8,7 +8,26 @@
 
           <div class="card-body bg-pokeball bg-normal">
             <div class="pokemon">
-              <img src="@/assets/images/pokemons/001.png" />
+              <!-- 
+                name="jump" //indicates the set of classes
+                type="animation" //predominant progression time
+                :duration="{ enter: 2000, leave: 1000 }" //manual progression time
+              -->
+              <transition
+                enter-active-class="animate__animated animate__bounceIn"
+                leave-active-class="animate__animated animate__bounceOut"
+              >
+                <img src="@/assets/images/pokemons/001.png" v-if="show" />
+              </transition>
+
+              <div class="evolutions">
+                <transition name="fade">
+                  <img src="@/assets/images/pokemons/002.png" v-if="show" />
+                </transition>
+                <transition name="fade">
+                  <img src="@/assets/images/pokemons/003.png" v-if="show" />
+                </transition>
+              </div>
             </div>
           </div>
 
@@ -54,7 +73,7 @@
         <div class="row">
           <div class="pokedex-catalog">
             <!-- start of dynamic list -->
-            <div class="card-pokemon bg-gram">
+            <div class="card-pokemon bg-gram" @click="show = !show">
               <h1>1 Bulbasaur</h1>
               <span>gram</span>
               <div class="card-pokemon-img">
@@ -73,6 +92,9 @@
 <script>
 export default {
   name: "HomeView",
+  data: () => ({
+    show: false,
+  }),
 };
 </script>
 
@@ -83,6 +105,8 @@ body {
 </style>
 
 <style scoped>
+@import "~@/assets/css/animations.css";
+
 .pokedex {
   padding: 20px;
   background-color: #ffffff;
@@ -174,9 +198,24 @@ body {
 .pokemon {
   display: block;
   text-align: center;
+  height: 215px;
 }
 
 .details {
   margin: 20px 30px 20px 30px;
+}
+
+.evolutions {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 70px;
+}
+
+.evolutions img {
+  cursor: pointer;
+  max-width: 100%;
+  max-height: 100%;
+  float: left;
 }
 </style>
