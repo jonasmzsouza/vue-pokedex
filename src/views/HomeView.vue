@@ -12,8 +12,18 @@
                 name="jump" //indicates the set of classes
                 type="animation" //predominant progression time
                 :duration="{ enter: 2000, leave: 1000 }" //manual progression time
+                @before-enter="beforeEnter"
+                @enter="enter"
+                @after-enter="afterEnter"
+                @enter-cancelled="enterCancelled"
+                @before-leave="beforeLeave"
+                @leave="leave"
+                @after-leave="afterLeave"
+                @leave-cancelled="leaveCancelled"
               -->
               <transition
+                @after-enter="transitionToShowEvolutions"
+                @before-leave="transitionToHideEvolutions"
                 enter-active-class="animate__animated animate__bounceIn"
                 leave-active-class="animate__animated animate__bounceOut"
               >
@@ -22,10 +32,16 @@
 
               <div class="evolutions">
                 <transition name="fade">
-                  <img src="@/assets/images/pokemons/002.png" v-if="show" />
+                  <img
+                    src="@/assets/images/pokemons/002.png"
+                    v-if="showEvolutions"
+                  />
                 </transition>
                 <transition name="fade">
-                  <img src="@/assets/images/pokemons/003.png" v-if="show" />
+                  <img
+                    src="@/assets/images/pokemons/003.png"
+                    v-if="showEvolutions"
+                  />
                 </transition>
               </div>
             </div>
@@ -94,7 +110,16 @@ export default {
   name: "HomeView",
   data: () => ({
     show: false,
+    showEvolutions: false,
   }),
+  methods: {
+    transitionToShowEvolutions() {
+      this.showEvolutions = true;
+    },
+    transitionToHideEvolutions() {
+      this.showEvolutions = false;
+    },
+  },
 };
 </script>
 
