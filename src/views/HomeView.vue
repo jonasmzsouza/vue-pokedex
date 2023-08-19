@@ -27,19 +27,24 @@
                 enter-active-class="animate__animated animate__bounceIn"
                 leave-active-class="animate__animated animate__bounceOut"
               >
-                <img src="@/assets/images/pokemons/001.png" v-if="show" />
+                <img
+                  :src="require(`@/assets/images/pokemons/${pokemon.image}`)"
+                  v-if="show"
+                />
               </transition>
 
               <div class="evolutions">
-                <transition name="fade">
+                <transition
+                  name="fade"
+                  v-for="e in pokemon.evolutions"
+                  :key="e"
+                >
                   <img
-                    src="@/assets/images/pokemons/002.png"
-                    v-if="showEvolutions"
-                  />
-                </transition>
-                <transition name="fade">
-                  <img
-                    src="@/assets/images/pokemons/003.png"
+                    :src="
+                      require(`@/assets/images/pokemons/${e
+                        .toString()
+                        .padStart(3, '0')}.png`)
+                    "
                     v-if="showEvolutions"
                   />
                 </transition>
@@ -89,11 +94,16 @@
         <div class="row">
           <div class="pokedex-catalog">
             <!-- start of dynamic list -->
-            <div class="card-pokemon bg-gram" @click="show = !show">
-              <h1>1 Bulbasaur</h1>
-              <span>gram</span>
+            <div
+              v-for="p in pokemons"
+              :key="p.id"
+              :class="`card-pokemon bg-${p.type}`"
+              @click="detectPokemon(p)"
+            >
+              <h1>{{ p.id }} {{ p.name }}</h1>
+              <span>{{ p.type }}</span>
               <div class="card-pokemon-img">
-                <img src="@/assets/images/pokemons/001.png" />
+                <img :src="require(`@/assets/images/pokemons/${p.image}`)" />
               </div>
             </div>
             <!-- end of dynamic list -->
@@ -111,8 +121,147 @@ export default {
   data: () => ({
     show: false,
     showEvolutions: false,
+    pokemon: {},
+    pokemons: [
+      {
+        id: 1,
+        name: "Bulbasaur",
+        type: "gram",
+        image: "001.png",
+        evolutions: [2, 3],
+      },
+      {
+        id: 2,
+        name: "Ivysaur",
+        type: "gram",
+        image: "002.png",
+        evolutions: [3],
+      },
+      {
+        id: 3,
+        name: "Venusaur",
+        type: "gram",
+        image: "003.png",
+        evolutions: [],
+      },
+      {
+        id: 4,
+        name: "Charmander",
+        type: "fire",
+        image: "004.png",
+        evolutions: [5, 6],
+      },
+      {
+        id: 5,
+        name: "Charmeleon",
+        type: "fire",
+        image: "005.png",
+        evolutions: [6],
+      },
+      {
+        id: 6,
+        name: "Charizard",
+        type: "fire",
+        image: "006.png",
+        evolutions: [],
+      },
+      {
+        id: 7,
+        name: "Squirtle",
+        type: "water",
+        image: "007.png",
+        evolutions: [8, 9],
+      },
+      {
+        id: 8,
+        name: "Wartortle",
+        type: "water",
+        image: "008.png",
+        evolutions: [9],
+      },
+      {
+        id: 9,
+        name: "Blastoise",
+        type: "water",
+        image: "009.png",
+        evolutions: [],
+      },
+      {
+        id: 10,
+        name: "Caterpie",
+        type: "insect",
+        image: "010.png",
+        evolutions: [11, 12],
+      },
+      {
+        id: 11,
+        name: "Metapod",
+        type: "insect",
+        image: "011.png",
+        evolutions: [12],
+      },
+      {
+        id: 12,
+        name: "Butterfree",
+        type: "insect",
+        image: "012.png",
+        evolutions: [],
+      },
+      {
+        id: 13,
+        name: "Weedle",
+        type: "insect",
+        image: "013.png",
+        evolutions: [14, 15],
+      },
+      {
+        id: 14,
+        name: "Kakuna",
+        type: "insect",
+        image: "014.png",
+        evolutions: [15],
+      },
+      {
+        id: 15,
+        name: "Beedrill",
+        type: "insect",
+        image: "015.png",
+        evolutions: [],
+      },
+      {
+        id: 16,
+        name: "Pidgey",
+        type: "normal",
+        image: "016.png",
+        evolutions: [17, 18],
+      },
+      {
+        id: 17,
+        name: "Pidgeotto",
+        type: "normal",
+        image: "017.png",
+        evolutions: [18],
+      },
+      {
+        id: 18,
+        name: "Pidgeot",
+        type: "normal",
+        image: "018.png",
+        evolutions: [],
+      },
+    ],
   }),
   methods: {
+    detectPokemon(p) {
+      if (this.pokemon.id != p.id && this.show) {
+        setTimeout(() => {
+          this.detectPokemon(p);
+        }, 1000);
+      }
+      this.pokemon = p;
+      this.show = !this.show;
+      this.showEvolutions = !this.showEvolutions;
+    },
     transitionToShowEvolutions() {
       this.showEvolutions = true;
     },
