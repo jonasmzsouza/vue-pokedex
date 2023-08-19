@@ -55,10 +55,35 @@
           <div class="card-footer">
             <nav class="nav nav-pills nav-fill">
               <!-- navigation menu -->
+              <router-link
+                class="nav-item nav-link text-white"
+                :to="{ path: '/about' }"
+                exact-active-class="active"
+                >About</router-link
+              >
+              <router-link
+                class="nav-item nav-link text-white"
+                :to="{ path: '/status' }"
+                exact-active-class="active"
+                >Status</router-link
+              >
+              <router-link
+                class="nav-item nav-link text-white"
+                :to="{ path: '/ability' }"
+                exact-active-class="active"
+                >Ability</router-link
+              >
             </nav>
 
             <div class="details">
               <!-- displays data according to navigation menu -->
+              <router-view v-slot="{ Component }">
+                <transition
+                  enter-active-class="animate__animated animate__zoomInDown"
+                >
+                  <component :is="Component"></component>
+                </transition>
+              </router-view>
             </div>
           </div>
         </div>
