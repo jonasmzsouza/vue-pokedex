@@ -77,7 +77,7 @@
 
             <div class="details">
               <!-- displays data according to navigation menu -->
-              <router-view v-slot="{ Component }">
+              <router-view v-slot="{ Component }" :pokemon="pokemon">
                 <transition
                   enter-active-class="animate__animated animate__zoomInDown"
                 >
@@ -128,7 +128,12 @@
               <h1>{{ p.id }} {{ p.name }}</h1>
               <span>{{ p.type }}</span>
               <div class="card-pokemon-img">
-                <img :src="require(`@/assets/images/pokemons/${p.image}`)" />
+                <transition
+                  appear
+                  enter-active-class="animate__animated animate__fadeInDown"
+                >
+                  <img :src="require(`@/assets/images/pokemons/${p.image}`)" />
+                </transition>
               </div>
             </div>
             <!-- end of dynamic list -->
@@ -147,145 +152,25 @@ export default {
     show: false,
     showEvolutions: false,
     pokemon: {},
-    pokemons: [
-      {
-        id: 1,
-        name: "Bulbasaur",
-        type: "gram",
-        image: "001.png",
-        evolutions: [2, 3],
-      },
-      {
-        id: 2,
-        name: "Ivysaur",
-        type: "gram",
-        image: "002.png",
-        evolutions: [3],
-      },
-      {
-        id: 3,
-        name: "Venusaur",
-        type: "gram",
-        image: "003.png",
-        evolutions: [],
-      },
-      {
-        id: 4,
-        name: "Charmander",
-        type: "fire",
-        image: "004.png",
-        evolutions: [5, 6],
-      },
-      {
-        id: 5,
-        name: "Charmeleon",
-        type: "fire",
-        image: "005.png",
-        evolutions: [6],
-      },
-      {
-        id: 6,
-        name: "Charizard",
-        type: "fire",
-        image: "006.png",
-        evolutions: [],
-      },
-      {
-        id: 7,
-        name: "Squirtle",
-        type: "water",
-        image: "007.png",
-        evolutions: [8, 9],
-      },
-      {
-        id: 8,
-        name: "Wartortle",
-        type: "water",
-        image: "008.png",
-        evolutions: [9],
-      },
-      {
-        id: 9,
-        name: "Blastoise",
-        type: "water",
-        image: "009.png",
-        evolutions: [],
-      },
-      {
-        id: 10,
-        name: "Caterpie",
-        type: "insect",
-        image: "010.png",
-        evolutions: [11, 12],
-      },
-      {
-        id: 11,
-        name: "Metapod",
-        type: "insect",
-        image: "011.png",
-        evolutions: [12],
-      },
-      {
-        id: 12,
-        name: "Butterfree",
-        type: "insect",
-        image: "012.png",
-        evolutions: [],
-      },
-      {
-        id: 13,
-        name: "Weedle",
-        type: "insect",
-        image: "013.png",
-        evolutions: [14, 15],
-      },
-      {
-        id: 14,
-        name: "Kakuna",
-        type: "insect",
-        image: "014.png",
-        evolutions: [15],
-      },
-      {
-        id: 15,
-        name: "Beedrill",
-        type: "insect",
-        image: "015.png",
-        evolutions: [],
-      },
-      {
-        id: 16,
-        name: "Pidgey",
-        type: "normal",
-        image: "016.png",
-        evolutions: [17, 18],
-      },
-      {
-        id: 17,
-        name: "Pidgeotto",
-        type: "normal",
-        image: "017.png",
-        evolutions: [18],
-      },
-      {
-        id: 18,
-        name: "Pidgeot",
-        type: "normal",
-        image: "018.png",
-        evolutions: [],
-      },
-    ],
+    pokemons: [],
   }),
   methods: {
     detectPokemon(p) {
+      let changeDetectedPokemon = false;
       if (this.pokemon.id != p.id && this.show) {
         setTimeout(() => {
           this.detectPokemon(p);
         }, 1000);
+
+        changeDetectedPokemon = true;
       }
       this.pokemon = p;
       this.show = !this.show;
       this.showEvolutions = !this.showEvolutions;
+
+      if (!this.show && !changeDetectedPokemon) {
+        this.pokemon = {};
+      }
     },
     transitionToShowEvolutions() {
       this.showEvolutions = true;
@@ -293,6 +178,15 @@ export default {
     transitionToHideEvolutions() {
       this.showEvolutions = false;
     },
+  },
+  created() {
+    fetch("http://localhost:3000/pokemons")
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        this.pokemons = data;
+      });
   },
 };
 </script>

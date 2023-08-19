@@ -1,59 +1,71 @@
 <template>
   <div>
-    <span>Strength:</span>
-    <div class="progress mb-2">
-      <div
-        class="progress-bar"
-        role="progressbar"
-        style="width: 30%"
-        aria-valuenow="30"
-        aria-valuemin="0"
-        aria-valuemax="100"
-      >
-        30
+    <div v-if="!pokemon.status">Select a pokemon</div>
+    <div v-else>
+      <span>Strength:</span>
+      <div class="progress mb-2">
+        <div
+          class="progress-bar"
+          role="progressbar"
+          :style="`width: ${pokemon.status.strength}%`"
+          :aria-valuenow="pokemon.status.strength"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        >
+          {{ pokemon.status.strength }}
+        </div>
       </div>
-    </div>
 
-    <span>Agility:</span>
-    <div class="progress mb-2">
-      <div
-        class="progress-bar"
-        role="progressbar"
-        style="width: 40%"
-        aria-valuenow="40"
-        aria-valuemin="0"
-        aria-valuemax="100"
-      >
-        40
+      <span>Agility:</span>
+      <div class="progress mb-2">
+        <div
+          class="progress-bar"
+          role="progressbar"
+          :style="`width: ${pokemon.status.agility}%`"
+          :aria-valuenow="pokemon.status.agility"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        >
+          {{ pokemon.status.agility }}
+        </div>
       </div>
-    </div>
 
-    <span>Attack:</span>
-    <div class="progress mb-2">
-      <div
-        class="progress-bar"
-        role="progressbar"
-        style="width: 20%"
-        aria-valuenow="20"
-        aria-valuemin="0"
-        aria-valuemax="100"
-      >
-        20
+      <span>Attack:</span>
+      <div class="progress mb-2">
+        <div
+          class="progress-bar"
+          role="progressbar"
+          :style="`width: ${pokemon.status.attack}%`"
+          :aria-valuenow="pokemon.status.attack"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        >
+          {{ pokemon.status.attack }}
+        </div>
       </div>
-    </div>
 
-    <span>Defense:</span>
-    <div class="progress mb-2">
-      <div
-        class="progress-bar"
-        role="progressbar"
-        style="width: 25%"
-        aria-valuenow="25"
-        aria-valuemin="0"
-        aria-valuemax="100"
-      >
-        25
+      <span>Defense:</span>
+      <div class="progress mb-2">
+        <div
+          class="progress-bar"
+          role="progressbar"
+          :style="`width: ${pokemon.status.defense}%`"
+          :aria-valuenow="pokemon.status.defense"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        >
+          {{ pokemon.status.defense }}
+        </div>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: "StatusComponent",
+  props: {
+    pokemon: Object,
+  },
+};
+</script>
