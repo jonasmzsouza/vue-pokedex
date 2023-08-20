@@ -120,6 +120,7 @@
               type="text"
               class="form-control"
               placeholder="search pokemon"
+              v-model="pokemonName"
             />
           </div>
         </div>
@@ -127,23 +128,27 @@
         <div class="row">
           <div class="pokedex-catalog">
             <!-- start of dynamic list -->
-            <div
-              v-for="p in pokemons"
-              :key="p.id"
-              :class="`card-pokemon bg-${p.type}`"
-              @click="detectPokemon(p)"
-            >
-              <h1>{{ p.id }} {{ p.name }}</h1>
-              <span>{{ p.type }}</span>
-              <div class="card-pokemon-img">
-                <transition
-                  appear
-                  enter-active-class="animate__animated animate__fadeInDown"
-                >
-                  <img :src="require(`@/assets/images/pokemons/${p.image}`)" />
-                </transition>
+            <transition-group name="assortment">
+              <div
+                v-for="p in pokemons"
+                :key="p.id"
+                :class="`card-pokemon bg-${p.type}`"
+                @click="detectPokemon(p)"
+              >
+                <h1>{{ p.id }} {{ p.name }}</h1>
+                <span>{{ p.type }}</span>
+                <div class="card-pokemon-img">
+                  <transition
+                    appear
+                    enter-active-class="animate__animated animate__fadeInDown"
+                  >
+                    <img
+                      :src="require(`@/assets/images/pokemons/${p.image}`)"
+                    />
+                  </transition>
+                </div>
               </div>
-            </div>
+            </transition-group>
             <!-- end of dynamic list -->
           </div>
         </div>
@@ -162,8 +167,18 @@ export default {
     pokemon: {},
     pokemons: [],
     sort: "",
+    pokemonName: "",
   }),
   watch: {
+    pokemonName(newValue) {
+      fetch(`http://localhost:3000/pokemons?name_like=${newValue}`)
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          this.pokemons = data;
+        });
+    },
     sort(newValue) {
       if (newValue == 1) {
         this.assortment("id", "ASC");
