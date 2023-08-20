@@ -77,7 +77,12 @@
 
             <div class="details">
               <!-- displays data according to navigation menu -->
-              <router-view v-slot="{ Component }" :pokemon="pokemon">
+              <router-view
+                v-slot="{ Component }"
+                :pokemon="pokemon"
+                @addAbility="addAbility"
+                @removeAbility="removeAbility"
+              >
                 <transition
                   enter-active-class="animate__animated animate__zoomInDown"
                 >
@@ -177,6 +182,16 @@ export default {
     },
     transitionToHideEvolutions() {
       this.showEvolutions = false;
+    },
+    addAbility(ability) {
+      if (this.pokemon.abilities && ability) {
+        this.pokemon.abilities.push(ability);
+      }
+    },
+    removeAbility(index) {
+      if (this.pokemon.abilities[index]) {
+        this.pokemon.abilities.splice(index, 1);
+      }
     },
   },
   created() {

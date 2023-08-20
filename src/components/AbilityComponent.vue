@@ -7,12 +7,24 @@
           <tr v-for="(ability, index) in pokemon.abilities" :key="index">
             <td>{{ ability }}</td>
             <td class="d-flex justify-content-end">
-              <button type="button" class="btn btn-danger btn-sm">x</button>
+              <button
+                type="button"
+                class="btn btn-danger btn-sm"
+                @click="removeAbility(index)"
+              >
+                x
+              </button>
             </td>
           </tr>
         </tbody>
       </table>
-      <input type="text" class="form-control" placeholder="Add ability" />
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Add ability"
+        v-model="ability"
+        @keyup.enter="addAbility"
+      />
     </div>
   </div>
 </template>
@@ -22,6 +34,18 @@ export default {
   name: "AbilityComponent",
   props: {
     pokemon: Object,
+  },
+  data: () => ({
+    ability: "",
+  }),
+  methods: {
+    addAbility() {
+      this.$emit("addAbility", this.ability);
+      this.ability = "";
+    },
+    removeAbility(index) {
+      this.$emit("removeAbility", index);
+    },
   },
 };
 </script>
