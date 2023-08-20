@@ -36,6 +36,14 @@
   transform: translateX(150px);
 }
 
+.slide-leave-active {
+  position: absolute;
+}
+
+.slide-move {
+  transition: all 1s;
+}
+
 /* zoom */
 .zoom-enter-from,
 .zoom-leave-to {

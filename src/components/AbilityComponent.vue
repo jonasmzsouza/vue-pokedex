@@ -4,18 +4,21 @@
     <div v-else>
       <table class="table text-white">
         <tbody>
-          <tr v-for="(ability, index) in pokemon.abilities" :key="index">
-            <td>{{ ability }}</td>
-            <td class="d-flex justify-content-end">
-              <button
-                type="button"
-                class="btn btn-danger btn-sm"
-                @click="removeAbility(index)"
-              >
-                x
-              </button>
-            </td>
-          </tr>
+          <transition-group name="slide">
+            <!-- :key="ability" exclusive for the transition-group -->
+            <tr v-for="(ability, index) in orderedAbilities" :key="ability">
+              <td>{{ ability }}</td>
+              <td class="d-flex justify-content-end">
+                <button
+                  type="button"
+                  class="btn btn-danger btn-sm"
+                  @click="removeAbility(index)"
+                >
+                  x
+                </button>
+              </td>
+            </tr>
+          </transition-group>
         </tbody>
       </table>
       <input
@@ -47,10 +50,17 @@ export default {
       this.$emit("removeAbility", index);
     },
   },
+  computed: {
+    orderedAbilities() {
+      let abilities = this.pokemon.abilities;
+      return abilities.sort();
+    },
+  },
 };
 </script>
 
 <style scoped>
+@import "~@/assets/css/animations.css";
 .table td {
   border: none;
   color: white;
