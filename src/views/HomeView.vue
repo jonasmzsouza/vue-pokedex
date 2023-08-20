@@ -105,10 +105,13 @@
 
         <div class="row">
           <div class="col">
-            <select class="form-select">
-              <option>increasing id</option>
-              <option>decreasing id</option>
-              <option>A-Z</option>
+            <select class="form-select" v-model="sort">
+              <option value="" selected disabled>Order pokemon</option>
+              <option value="1">increasing id</option>
+              <option value="2">decreasing id</option>
+              <option value="3">A-Z</option>
+              <option value="4">Z-A</option>
+              <option value="5">Z-A (localeCompare)</option>
             </select>
           </div>
 
@@ -158,8 +161,61 @@ export default {
     showEvolutions: false,
     pokemon: {},
     pokemons: [],
+    sort: "",
   }),
+  watch: {
+    sort(newValue) {
+      if (newValue == 1) {
+        this.assortment("id", "ASC");
+      }
+
+      if (newValue == 2) {
+        this.assortment("id", "DESC");
+      }
+
+      if (newValue == 3) {
+        this.assortment("name", "ASC");
+      }
+
+      if (newValue == 4) {
+        this.assortment("name", "DESC");
+      }
+
+      if (newValue == 5) {
+        this.pokemons.sort((next, current) => {
+          return current.name.localeCompare(next.name);
+        });
+      }
+    },
+  },
   methods: {
+    assortment(attribute, order) {
+      //sort method
+      //return 1 to indicate that the order is correct
+      //return -1 to indicate that the order is not correct
+      //return 0 to indicate that they are equal (nothing must be done)
+      if (order == "ASC") {
+        this.pokemons.sort((next, current) => {
+          if (current[attribute] < next[attribute]) {
+            return 1;
+          } else if (current[attribute] > next[attribute]) {
+            return -1;
+          }
+
+          return 0;
+        });
+      } else if (order == "DESC") {
+        this.pokemons.sort((next, current) => {
+          if (current[attribute] < next[attribute]) {
+            return -1;
+          } else if (current[attribute] > next[attribute]) {
+            return 1;
+          }
+
+          return 0;
+        });
+      }
+    },
     detectPokemon(p) {
       let changeDetectedPokemon = false;
       if (this.pokemon.id != p.id && this.show) {
