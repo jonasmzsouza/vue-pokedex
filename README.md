@@ -8,6 +8,12 @@
 
 <hr>
 
+<p align="center"> 
+  <img  src="https://raw.githubusercontent.com/jonasmzsouza/jonasmzsouza.github.io/main/assets/images/vue-pokedex.jpg"  width="100%"  alt="screenshot vue-pokedex">
+</p>
+
+<hr>
+
 <p align="center">
   <a href="#-about-the-project">About</a> |
   <a href="#-technologies">Technologies</a> | 
